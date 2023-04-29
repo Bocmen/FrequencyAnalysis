@@ -80,11 +80,6 @@ namespace FrequencyAnalysisApp
                 }
             }, "ExcelAnalysisTextContent"), Consts.TitleFileSave);
         }
-        private async void SavePngButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (await IsNotContainsResilt()) return;
-            await PrefabsDialog.ViewWaitTask(() => FileSave.Save("png", HistogramPlot.SavePngAsync, "HistogramImage"), Consts.TitleFileSave);
-        }
         private void BackButton_Click(object sender, RoutedEventArgs e) => Frame.GoBack();
         #endregion
         #region Reader
@@ -196,16 +191,7 @@ namespace FrequencyAnalysisApp
         private async void DrawPlotsButton_Click(object sender, RoutedEventArgs e)
         {
             _analysisResult = await CreateAnalysis();
-            PlotModel model = new PlotModel();
-
-            var drawResult = _analysisResult.GetResults().OrderByDescending(x => x.Count);
-
-            var barSeries = new BarSeries() { ItemsSource = drawResult.Select(x => new BarItem(x.Frequency)) };
-            var categoryAxis = new CategoryAxis() { ItemsSource = drawResult.Select(x => $"'{x.Value}'"), Position = AxisPosition.Left };
-            model.Series.Add(barSeries);
-            model.Axes.Add(categoryAxis);
-
-            HistogramPlot.Model = model;
+            HistogramPlot.Draw(_analysisResult, "Гистограмма текста", OxyColors.DarkGreen);
         }
         #endregion
         #region Работа со словарём элементов

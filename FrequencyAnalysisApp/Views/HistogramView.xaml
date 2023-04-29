@@ -1,0 +1,57 @@
+﻿<UserControl
+    x:Class="FrequencyAnalysisApp.Views.HistogramView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FrequencyAnalysisApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:oxy="using:OxyPlot.Windows"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
+    mc:Ignorable="d">
+    
+    <Frame Style="{StaticResource FramePanel}"
+           HorizontalAlignment="Stretch"
+           VerticalAlignment="Stretch"
+           Margin="0"
+           Padding="0">
+        <Grid HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
+              Style="{StaticResource RootGrid}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="Title"
+                       Grid.Column="0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="Гистограмма"
+                       Style="{StaticResource TitleTextBlockStyle}"/>
+            <AppBarButton x:Name="FullOpen"
+                          MaxHeight="40"
+                          Click="FullOpen_Click"
+                          Grid.Column="1"
+                          VerticalAlignment="Center"
+                          Icon="View"/>
+            <AppBarButton x:Name="SaveImage"
+                          MaxHeight="40"
+                          Click="SaveImage_Click"
+                          Grid.Column="2"
+                          VerticalAlignment="Center"
+                          Icon="Camera"/>
+            <Frame x:Name="HistogramPlotContainer"
+                   Grid.Row="1"
+                   Grid.ColumnSpan="3"
+                   Style="{StaticResource FramePanel}"
+                   Margin="0"
+                   Padding="-8">
+            </Frame>
+        </Grid>
+    </Frame>
+</UserControl>

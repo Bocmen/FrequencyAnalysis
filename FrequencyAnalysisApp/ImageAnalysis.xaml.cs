@@ -30,6 +30,7 @@ namespace FrequencyAnalysisApp
 
         public ImageAnalysis() => InitializeComponent();
         #region AppCommandBar
+        private void BackButton_Click(object sender, RoutedEventArgs e) => Frame.GoBack();
         private async void OpenFileButton_Click(object sender, RoutedEventArgs e)
         {
             await PrefabsDialog.ViewWaitTask(async () =>

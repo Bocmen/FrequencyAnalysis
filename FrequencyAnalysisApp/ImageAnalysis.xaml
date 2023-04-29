@@ -5,6 +5,7 @@
     xmlns:local="using:FrequencyAnalysisApp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    NavigationCacheMode="Enabled"
     mc:Ignorable="d"
     Style="{StaticResource GlobalPageStyle}">
 
@@ -13,6 +14,7 @@
                     Grid.Column="0">
             <CommandBar.Content>
                 <Button x:Name="BackButton"
+                        Click="BackButton_Click"
                         Style="{StaticResource NavigationBackButtonNormalStyle}"
                         IsEnabled="{x:Bind Mode=OneWay, Path=Frame.CanGoBack}"
                         ToolTipService.ToolTip="Back" 

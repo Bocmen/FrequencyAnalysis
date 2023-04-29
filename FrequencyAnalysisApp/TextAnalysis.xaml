@@ -5,8 +5,9 @@
     xmlns:local="using:FrequencyAnalysisApp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:oxy="using:OxyPlot.Windows"
+    xmlns:Views="using:FrequencyAnalysisApp.Views"
     xmlns:Models="using:FrequencyAnalysisApp.Model"
+    NavigationCacheMode="Enabled"
     mc:Ignorable="d"
     Style="{StaticResource GlobalPageStyle}">
 
@@ -33,10 +34,6 @@
                           Click="SaveCsvButton_Click"
                           Icon="Save"
                           Label="Сохранить .csv"/>
-            <AppBarButton x:Name="SavePngButton"
-                          Click="SavePngButton_Click"
-                          Icon="Camera"
-                          Label="Сохранить .png"/>
         </CommandBar>
     </Page.TopAppBar>
 
@@ -55,15 +52,13 @@
             <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
 
-        <Frame Grid.Column="1"
-               Grid.Row="0"
-               Grid.RowSpan="3"
-               Grid.ColumnSpan="2"
-               Style="{StaticResource FramePanel}"
-               Margin="0"
-               Padding="-8">
-            <oxy:PlotView x:Name="HistogramPlot"/>
-        </Frame>
+        <Views:HistogramView x:Name="HistogramPlot"
+                             Grid.Column="1"
+                             Grid.Row="0"
+                             Grid.RowSpan="3"
+                             Grid.ColumnSpan="2"
+                             Margin="0">
+        </Views:HistogramView>
         <TextBox x:Name="FieldMultiLineText"
                  Grid.RowSpan="5"
                  Style="{StaticResource PanelTextBox}"
