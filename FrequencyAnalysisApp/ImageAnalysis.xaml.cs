@@ -1,4 +1,5 @@
-﻿using FrequencyAnalysisApp.Model;
+﻿using FrequencyAnalysisApp.Extension;
+using FrequencyAnalysisApp.Model;
 using FrequencyAnalysisApp.Tools;
 using OxyPlot;
 using System;
@@ -27,6 +28,7 @@ namespace FrequencyAnalysisApp
         };
 
         private readonly FrequencyImageAnalysis _analysisResult = new FrequencyImageAnalysis();
+        private HistogramType currentViewsHistogram = HistogramType.None;
 
         public ImageAnalysis() => InitializeComponent();
         #region AppCommandBar
@@ -42,6 +44,7 @@ namespace FrequencyAnalysisApp
                     BitmapImage bitmap = new BitmapImage();
                     bitmap.SetSource(await file.OpenReadAsync());
                     CurrentImage.Source = bitmap;
+                    ClearHistogramContainer();
                 }
             }, "Загрузка и анализ изображения");
         }
@@ -162,5 +165,46 @@ namespace FrequencyAnalysisApp
                 }
             }
         }
+
+        private async Task AddHistogram<T>(FrequencyAnalysis<T> frequencyAnalysis, string title, OxyColor oxyColor, HistogramType histogramType, Func<FrequencyAnalysisNode<T>, double> order = null)
+        {
+            if (await IsNotContainsResilt()) return;
+            if (currentViewsHistogram.HasFlag(histogramType)) return;
+            var view = new Views.HistogramView();
+            view.MinHeight = Frame.ActualHeight * 0.6;
+            view.Draw(frequencyAnalysis, title, (v) => v is OxyColor colorParse ? colorParse : oxyColor, order);
+            currentViewsHistogram |= histogramType;
+            HistogramContainer.Children.Add(view);
+        }
+        private void ClearHistogramContainer()
+        {
+            currentViewsHistogram = HistogramType.None;
+            HistogramContainer.Children.Clear();
+        }
+        [Flags]
+        public enum HistogramType
+        {
+            None = 0,
+            Color = 1,
+            Red = 2,
+            Green = 4,
+            Blue = 8,
+            Alpha = 16,
+            Transparency = 32
+        }
+
+        private async void ColorHistogram_Click(object sender, RoutedEventArgs e)
+            => await AddHistogram(_analysisResult.Color, ColorHistogram.Content as string, OxyColors.DarkGreen, HistogramType.Color);
+        private async void AlphaHistogram_Click(object sender, RoutedEventArgs e)
+            => await AddHistogram(_analysisResult.Alpha, AlphaHistogram.Content as string, OxyColors.Black, HistogramType.Alpha, (v) => v.Value);
+        private async void RedHistogram_Click(object sender, RoutedEventArgs e)
+            => await AddHistogram(_analysisResult.Red, RedHistogram.Content as string, OxyColors.Red, HistogramType.Red, (v) => v.Value);
+        private async void GreenHistogram_Click(object sender, RoutedEventArgs e)
+            => await AddHistogram(_analysisResult.Green, GreenHistogram.Content as string, OxyColors.Green, HistogramType.Green, (v) => v.Value);
+        private async void BlueHistogram_Click(object sender, RoutedEventArgs e)
+            => await AddHistogram(_analysisResult.Blue, BlueHistogram.Content as string, OxyColors.Blue, HistogramType.Blue, (v) => v.Value);
+        private async void TransparencyHistogram_Click(object sender, RoutedEventArgs e)
+            => await AddHistogram(_analysisResult.Transparency, TransparencyHistogram.Content as string, OxyColors.Black, HistogramType.Transparency, (v) => v.Value);
+        private void ClearHistogramContainer_Click(object sender, RoutedEventArgs e) => ClearHistogramContainer();
     }
 }

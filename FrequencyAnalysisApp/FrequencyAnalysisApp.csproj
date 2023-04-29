@@ -121,6 +121,7 @@
     </Compile>
     <Compile Include="Consts.cs" />
     <Compile Include="Extension\FrequencyAnalysisExtension.cs" />
+    <Compile Include="Extension\HistogramViewExtension.cs" />
     <Compile Include="Extension\PlotModelExtensions.cs" />
     <Compile Include="Extension\UIElementExtension.cs" />
     <Compile Include="ImageAnalysis.xaml.cs">

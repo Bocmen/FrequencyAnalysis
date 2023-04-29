@@ -16,25 +16,19 @@ namespace FrequencyAnalysisApp.Views
 {
     public sealed partial class HistogramView : UserControl
     {
-        private List<(string value, double frequency)> _data = new List<(string value, double frequency)>();
         private PlotView _currentPlotView;
 
         public HistogramView() => InitializeComponent();
 
-        public void Draw<T>(FrequencyAnalysis<T> dataFrequencyAnalysis, string title, OxyColor color, Func<T, string> valueConverter = null)
+        public void Draw(IEnumerable<NodeHistogram> data, string title)
         {
             Title.Text = title ?? string.Empty;
-            _data.Clear();
-            valueConverter = valueConverter ?? ((val) => valueConverter.ToString());
-            _data.AddRange(dataFrequencyAnalysis.GetResults().OrderByDescending(x => x.Count).Select(x => (valueConverter(x.Value), x.Frequency)));
 
 
             PlotModel model = new PlotModel();
 
-            var drawResult = dataFrequencyAnalysis.GetResults().OrderByDescending(x => x.Count);
-
-            var barSeries = new BarSeries() { ItemsSource = drawResult.Select(x => new BarItem(x.Frequency)), FillColor = color };
-            var categoryAxis = new CategoryAxis() { ItemsSource = drawResult.Select(x => $"'{x.Value}'"), Position = AxisPosition.Left };
+            var barSeries = new ColumnSeries() { ItemsSource = data.Select(x => new ColumnItem(x.Value) { Color = x.Color }) };
+            var categoryAxis = new CategoryAxis() { ItemsSource = data.Select(x => x.BarName), Position = AxisPosition.Bottom };
             model.Series.Add(barSeries);
             model.Axes.Add(categoryAxis);
             SetViewModel(model);
@@ -60,6 +54,20 @@ namespace FrequencyAnalysisApp.Views
                 Model = plotModel
             };
             HistogramPlotContainer.Content = _currentPlotView;
+        }
+
+        public struct NodeHistogram
+        {
+            public string BarName { get; private set; }
+            public OxyColor Color { get; private set; }
+            public double Value { get; private set; }
+
+            public NodeHistogram(string barName, OxyColor color, double value)
+            {
+                BarName=barName;
+                Color=color;
+                Value=value;
+            }
         }
 
         private class FullScreenHistogramView: Page

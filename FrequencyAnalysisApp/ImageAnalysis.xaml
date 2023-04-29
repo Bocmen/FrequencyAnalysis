@@ -61,24 +61,35 @@
                            Grid.ColumnSpan="2"
                            Text="Нажмите на необходимые гистограммы"
                            Style="{StaticResource Title}"/>
-                <Button Grid.Row="1"
+                <Button x:Name="ColorHistogram"
+                        Click="ColorHistogram_Click"
+                        Grid.Row="1"
                         Content="Уникальные цвета"
                         Style="{StaticResource GlobalButton}"/>
-                <Button Grid.Row="1"
+                <Button x:Name="AlphaHistogram"
+                        Click="AlphaHistogram_Click"
+                        Grid.Row="1"
                         Grid.Column="1"
                         Content="Прозрачность"
                         Style="{StaticResource GlobalButton}"/>
                 <Button Grid.Row="2"
+                        x:Name="RedHistogram"
+                        Click="RedHistogram_Click"
                         Content="Красный"
                         Style="{StaticResource GlobalButton}"/>
-                <Button Grid.Row="2"
+                <Button x:Name="GreenHistogram"
+                        Click="GreenHistogram_Click"
+                        Grid.Row="2"
                         Grid.Column="1"
                         Content="Зелёный"
                         Style="{StaticResource GlobalButton}"/>
-                <Button Grid.Row="3"
+                <Button x:Name="BlueHistogram"
+                        Click="BlueHistogram_Click"
+                        Grid.Row="3"
                         Content="Синий"
                         Style="{StaticResource GlobalButton}"/>
-                <Button Grid.Row="3"
+                <Button x:Name="TransparencyHistogram"
+                        Click="TransparencyHistogram_Click" Grid.Row="3"
                         Grid.Column="1"
                         Content="Яркость"
                         Style="{StaticResource GlobalButton}"/>
@@ -94,14 +105,15 @@
             </Grid.RowDefinitions>
             <Frame Style="{StaticResource FramePanel}">
                 <ScrollViewer>
-                    <StackPanel>
+                    <StackPanel x:Name="HistogramContainer">
 
                     </StackPanel>
                 </ScrollViewer>
             </Frame>
-            <Button Content="Удалить гистограммы"
-                        Grid.Row="1"
-                        Style="{StaticResource GlobalButton}"/>
+            <Button Click="ClearHistogramContainer_Click"
+                    Content="Удалить гистограммы"
+                    Grid.Row="1"
+                    Style="{StaticResource GlobalButton}"/>
         </Grid>
     </Grid>
 </Page>

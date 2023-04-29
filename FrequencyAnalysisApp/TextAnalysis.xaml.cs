@@ -191,7 +191,7 @@ namespace FrequencyAnalysisApp
         private async void DrawPlotsButton_Click(object sender, RoutedEventArgs e)
         {
             _analysisResult = await CreateAnalysis();
-            HistogramPlot.Draw(_analysisResult, "Гистограмма текста", OxyColors.DarkGreen);
+            HistogramPlot.Draw(_analysisResult, "Гистограмма текста", (_) => OxyColors.DarkGreen, (v) => v.Count);
         }
         #endregion
         #region Работа со словарём элементов
