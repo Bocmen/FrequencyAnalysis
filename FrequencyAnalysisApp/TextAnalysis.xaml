@@ -1,0 +1,139 @@
+﻿<Page
+    x:Class="FrequencyAnalysisApp.TextAnalysis"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FrequencyAnalysisApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:oxy="using:OxyPlot.Windows"
+    xmlns:Models="using:FrequencyAnalysisApp.Model"
+    mc:Ignorable="d"
+    Style="{StaticResource GlobalPageStyle}">
+
+    <Page.TopAppBar>
+        <CommandBar Grid.Row="0"
+                    Grid.Column="0">
+            <CommandBar.Content>
+                <Button x:Name="BackButton"
+                        Click="BackButton_Click"
+                        Style="{StaticResource NavigationBackButtonNormalStyle}"
+                        IsEnabled="{x:Bind Mode=OneWay, Path=Frame.CanGoBack}"
+                        ToolTipService.ToolTip="Back" 
+                        VerticalAlignment="Top"/>
+            </CommandBar.Content>
+            <AppBarButton x:Name="OpenFileButton"
+                          Click="OpenFileButton_Click"
+                          Icon="OpenFile"
+                          Label="Открыть файл"/>
+            <AppBarButton x:Name="SaveTxtButton"
+                          Click="SaveTxtButton_Click"
+                          Icon="Document"
+                          Label="Сохранить .txt"/>
+            <AppBarButton x:Name="SaveCsvButton"
+                          Click="SaveCsvButton_Click"
+                          Icon="Save"
+                          Label="Сохранить .csv"/>
+            <AppBarButton x:Name="SavePngButton"
+                          Click="SavePngButton_Click"
+                          Icon="Camera"
+                          Label="Сохранить .png"/>
+        </CommandBar>
+    </Page.TopAppBar>
+
+    <Grid Style="{StaticResource RootGrid}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1.15*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.75*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="0.3*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBox x:Name="FieldMultiLineText"
+                 Grid.RowSpan="5"
+                 Style="{StaticResource PanelTextBox}"/>
+        <TextBox x:Name="PatternDictonaryChar"
+                 Grid.Column="1"
+                 Grid.Row="4"
+                 Grid.RowSpan="2"
+                 Description="Словарь элементов"
+                 Style="{StaticResource PanelTextBox}"/>
+        <Frame Grid.Column="1"
+               Grid.Row="0"
+               Grid.RowSpan="3"
+               Grid.ColumnSpan="2"
+               Style="{StaticResource FramePanel}"
+               Margin="0"
+               Padding="-8">
+            <oxy:PlotView x:Name="HistogramPlot"/>
+        </Frame>
+        <Frame Grid.Column="2"
+               Grid.Row="4"
+               Grid.RowSpan="2"
+               Style="{StaticResource FramePanel}">
+            <ScrollViewer>
+                <StackPanel>
+                    <ComboBox x:Name="ComboBoxDictonaryNumbers"
+                              Description="Цифры в словаре"
+                              SelectedIndex="0"
+                              Style="{StaticResource GlobalComboBox}">
+                        <Models:ComboBoxDictonaryNode Name="Не определено"/>
+                        <Models:ComboBoxDictonaryNode Name="Да" Data="0123456789"/>
+                    </ComboBox>
+                    <ComboBox x:Name="ComboBoxDictonaryCyrillic"
+                              Description="Кириллица"
+                              SelectedIndex="0"
+                              Style="{StaticResource GlobalComboBox}">
+                        <Models:ComboBoxDictonaryNode Name="Не определено"/>
+                        <Models:ComboBoxDictonaryNode Name="Да lower" Data="абвгдеёжзийклмнопрстуфхцчшщъыьэюя"/>
+                        <Models:ComboBoxDictonaryNode Name="Да upper" Data="АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"/>
+                        <Models:ComboBoxDictonaryNode Name="Да lower and upper" Data="абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"/>
+                    </ComboBox>
+                    <ComboBox x:Name="ComboBoxDictonaryLatinAlphabet"
+                              Description="Латинский алфавит"
+                              SelectedIndex="0"
+                              Style="{StaticResource GlobalComboBox}">
+                        <Models:ComboBoxDictonaryNode Name="Не определено"/>
+                        <Models:ComboBoxDictonaryNode Name="Да lower" Data="abcdefghijklmnopqrstuvwxyz"/>
+                        <Models:ComboBoxDictonaryNode Name="Да upper" Data="ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
+                        <Models:ComboBoxDictonaryNode Name="Да lower and upper" Data="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"/>
+                    </ComboBox>
+                    <ComboBox x:Name="ComboBoxDictonaryPunctuation"
+                              Description="Знаки препинания"
+                              SelectedIndex="0"
+                              Style="{StaticResource GlobalComboBox}">
+                        <Models:ComboBoxDictonaryNode Name="Не определено"/>
+                        <Models:ComboBoxDictonaryNode Name="Да" Data=".,?!"/>
+                    </ComboBox>
+                    <Button x:Name="CreateDictonaryButton"
+                            Click="CreateDictonaryButton_Click"
+                            Content="Создать словарь"
+                            Style="{StaticResource GlobalButton}"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Frame>
+        <Button x:Name="DrawPlotsButton"
+                Click="DrawPlotsButton_Click"
+                Grid.Row="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Content="Построить график"
+                Style="{StaticResource GlobalButton}"/>
+        <ComboBox x:Name="ComboBoxCaseFilter"
+                  Grid.Column="0"
+                  Grid.Row="5"
+                  Description="Преобразовать все входные символы к одному регистру"
+                  SelectedIndex="1"
+                  Style="{StaticResource GlobalComboBox}">
+            <ComboBoxItem Content="Нет"/>
+            <ComboBoxItem Content="Да lower"/>
+            <ComboBoxItem Content="Да upper"/>
+        </ComboBox>
+    </Grid>
+</Page>
