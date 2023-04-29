@@ -60,6 +60,12 @@
                 <Setter Property="PrimaryButtonText" Value="Ок, я понял(а)"/>
                 <Setter Property="PrimaryButtonStyle" Value="{StaticResource GlobalButton}"/>
             </Style>
+            <Style x:Key="Title" TargetType="TextBlock">
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="20"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 

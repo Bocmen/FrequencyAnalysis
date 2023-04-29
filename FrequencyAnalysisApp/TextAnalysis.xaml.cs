@@ -19,7 +19,6 @@ namespace FrequencyAnalysisApp
 {
     public sealed partial class TextAnalysis : Page
     {
-        public const string ContentDialogNoGeneratedResult = "ContentDialogNoGeneratedResult";
         private readonly Windows.Storage.Pickers.FileOpenPicker _fileOpenPicker = new Windows.Storage.Pickers.FileOpenPicker()
         {
             SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary,
@@ -43,11 +42,7 @@ namespace FrequencyAnalysisApp
         {
             if (_analysisResult == null)
             {
-                ContentDialog contentDialog = new ContentDialog()
-                {
-                    Style = (Style)Application.Current.Resources[ContentDialogNoGeneratedResult]
-                };
-                await contentDialog.ShowAsync();
+                await PrefabsDialog.ShowErrorNotReult();
                 return true;
             }
             return false;
@@ -56,39 +51,39 @@ namespace FrequencyAnalysisApp
         private async void SaveTxtButton_Click(object sender, RoutedEventArgs e)
         {
             if (await IsNotContainsResilt()) return;
-            await FileSave.Save("txt", async (file) =>
+            await PrefabsDialog.ViewWaitTask(() => FileSave.Save("txt", async (file) =>
             {
                 using (StreamWriter sw = new StreamWriter(await file.OpenStreamForWriteAsync(), FileSave.DefaultEncoding))
                 {
-                    sw.WriteLine("Глобальные результаты анализа.\n");
-                    sw.WriteLine($"{Consts.FrequencyAnalysis_NameCountValues}: {_analysisResult.CountValues}");
-                    sw.WriteLine($"{Consts.FrequencyAnalysis_NameCountUniqle}: {_analysisResult.CountUniqle}");
-                    sw.WriteLine($"{Consts.FrequencyAnalysis_NameMinInformationMeasure}: {_analysisResult.MinInformationMeasure}");
-                    sw.WriteLine("\nЧастотные характеристики каждого элемента");
+                    await sw.WriteLineAsync("Глобальные результаты анализа.\n");
+                    await sw.WriteLineAsync($"{Consts.FrequencyAnalysis_NameCountValues}: {_analysisResult.CountValues}");
+                    await sw.WriteLineAsync($"{Consts.FrequencyAnalysis_NameCountUniqle}: {_analysisResult.CountUniqle}");
+                    await sw.WriteLineAsync($"{Consts.FrequencyAnalysis_NameMinInformationMeasure}: {_analysisResult.MinInformationMeasure}");
+                    await sw.WriteLineAsync("\nЧастотные характеристики каждого элемента");
                     foreach (var item in _analysisResult.GetResults())
-                        sw.WriteLine($"Элемент [{CharProtection(item.Value)}], Количество [{item.Count}], Частота [{item.Frequency}]");
+                        await sw.WriteLineAsync($"{Consts.NameField_Value} [{CharProtection(item.Value)}], {Consts.NameField_Count} [{item.Count}], {Consts.NameField_Frequency} [{item.Frequency}]");
                 }
-            }, "TextAnalysisTextContent");
+            }, "TextAnalysisTextContent"), Consts.TitleFileSave);
         }
         private async void SaveCsvButton_Click(object sender, RoutedEventArgs e)
         {
             if (await IsNotContainsResilt()) return;
-            await FileSave.Save("csv", async (file) =>
+            await PrefabsDialog.ViewWaitTask(() => FileSave.Save("csv", async (file) =>
             {
                 using (StreamWriter sw = new StreamWriter(await file.OpenStreamForWriteAsync(), FileSave.DefaultEncoding))
                 {
-                    sw.WriteLine($"{Consts.FrequencyAnalysis_NameCountValues};{Consts.FrequencyAnalysis_NameCountUniqle};{Consts.FrequencyAnalysis_NameMinInformationMeasure};");
-                    sw.WriteLine($"{_analysisResult.CountValues};{_analysisResult.CountUniqle};{_analysisResult.MinInformationMeasure};");
-                    sw.WriteLine("Элемент;Количество;Частота;");
+                    await sw.WriteLineAsync($"{Consts.FrequencyAnalysis_NameCountValues};{Consts.FrequencyAnalysis_NameCountUniqle};{Consts.FrequencyAnalysis_NameMinInformationMeasure};");
+                    await sw.WriteLineAsync($"{_analysisResult.CountValues};{_analysisResult.CountUniqle};{_analysisResult.MinInformationMeasure};");
+                    await sw.WriteLineAsync($"{Consts.NameField_Value};{Consts.NameField_Count};{Consts.NameField_Frequency};");
                     foreach (var item in _analysisResult.GetResults())
-                        sw.WriteLine($"{CharProtection(item.Value)};{item.Count};{item.Frequency};");
+                        await sw.WriteLineAsync($"{CharProtection(item.Value)};{item.Count};{item.Frequency};");
                 }
-            }, "ExcelAnalysisTextContent");
+            }, "ExcelAnalysisTextContent"), Consts.TitleFileSave);
         }
         private async void SavePngButton_Click(object sender, RoutedEventArgs e)
         {
             if (await IsNotContainsResilt()) return;
-            await FileSave.Save("png", HistogramPlot.SavePngAsync, "HistogramImage");
+            await PrefabsDialog.ViewWaitTask(() => FileSave.Save("png", HistogramPlot.SavePngAsync, "HistogramImage"), Consts.TitleFileSave);
         }
         private void BackButton_Click(object sender, RoutedEventArgs e) => Frame.GoBack();
         #endregion

@@ -1,0 +1,105 @@
+﻿<Page
+    x:Class="FrequencyAnalysisApp.ImageAnalysis"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FrequencyAnalysisApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Style="{StaticResource GlobalPageStyle}">
+
+    <Page.TopAppBar>
+        <CommandBar Grid.Row="0"
+                    Grid.Column="0">
+            <CommandBar.Content>
+                <Button x:Name="BackButton"
+                        Style="{StaticResource NavigationBackButtonNormalStyle}"
+                        IsEnabled="{x:Bind Mode=OneWay, Path=Frame.CanGoBack}"
+                        ToolTipService.ToolTip="Back" 
+                        VerticalAlignment="Top"/>
+            </CommandBar.Content>
+            <AppBarButton x:Name="OpenFileButton"
+                          Click="OpenFileButton_Click"
+                          Icon="OpenFile"
+                          Label="Открыть файл"/>
+            <AppBarButton x:Name="SaveCsvButton"
+                          Click="SaveCsvButton_Click"
+                          Icon="Save"
+                          Label="Сохранить .csv"/>
+        </CommandBar>
+    </Page.TopAppBar>
+
+    <Grid Style="{StaticResource RootGrid}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.65*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.15*"/>
+        </Grid.RowDefinitions>
+        <Frame Style="{StaticResource FramePanel}">
+            <Image x:Name="CurrentImage"
+                   Source="/Assets/SplashScreen.scale-200.png"/>
+        </Frame>
+        <Frame Grid.Row="1"
+               Style="{StaticResource FramePanel}">
+            <Grid Style="{StaticResource RootGrid}">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0"
+                           Grid.ColumnSpan="2"
+                           Text="Нажмите на необходимые гистограммы"
+                           Style="{StaticResource Title}"/>
+                <Button Grid.Row="1"
+                        Content="Уникальные цвета"
+                        Style="{StaticResource GlobalButton}"/>
+                <Button Grid.Row="1"
+                        Grid.Column="1"
+                        Content="Прозрачность"
+                        Style="{StaticResource GlobalButton}"/>
+                <Button Grid.Row="2"
+                        Content="Красный"
+                        Style="{StaticResource GlobalButton}"/>
+                <Button Grid.Row="2"
+                        Grid.Column="1"
+                        Content="Зелёный"
+                        Style="{StaticResource GlobalButton}"/>
+                <Button Grid.Row="3"
+                        Content="Синий"
+                        Style="{StaticResource GlobalButton}"/>
+                <Button Grid.Row="3"
+                        Grid.Column="1"
+                        Content="Яркость"
+                        Style="{StaticResource GlobalButton}"/>
+            </Grid>
+        </Frame>
+        <Grid Grid.Column="1"
+              Grid.RowSpan="2"
+              Margin="0"
+              Style="{StaticResource RootGrid}">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Frame Style="{StaticResource FramePanel}">
+                <ScrollViewer>
+                    <StackPanel>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Frame>
+            <Button Content="Удалить гистограммы"
+                        Grid.Row="1"
+                        Style="{StaticResource GlobalButton}"/>
+        </Grid>
+    </Grid>
+</Page>

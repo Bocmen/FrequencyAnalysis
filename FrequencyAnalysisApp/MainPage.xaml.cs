@@ -8,9 +8,6 @@ namespace FrequencyAnalysisApp
         public MainPage() => InitializeComponent();
 
         private void TextFrequencyAnalysis_Click(object sender, RoutedEventArgs e) => Frame.Navigate(typeof(TextAnalysis));
-        private void ImageFrequencyAnalysis_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        private void ImageFrequencyAnalysis_Click(object sender, RoutedEventArgs e) => Frame.Navigate(typeof(ImageAnalysis));
     }
 }
