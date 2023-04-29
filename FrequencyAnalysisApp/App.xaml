@@ -1,15 +1,14 @@
 ﻿<Application
     x:Class="FrequencyAnalysisApp.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:FrequencyAnalysisApp">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
         <ResourceDictionary>
             <CornerRadius x:Key="GlobalCornerRadius">8</CornerRadius>
             <Thickness x:Key="GlobalBorderThickness">2.3</Thickness>
             <Color x:Key="GlobalHighlightingColor">#45609a</Color>
-            <Color x:Key="BackgroundPanel">#19FFFFFF</Color>
-            <x:Double x:Key="GlobalSpacing">10</x:Double>
+            <Color x:Key="BackgroundPanel">#0CFFFFFF</Color>
+            <x:Double x:Key="GlobalSpacing">6</x:Double>
 
             <Style TargetType="Page" x:Key="GlobalPageStyle">
                 <Setter Property="Background" Value="#040005"/>
@@ -34,6 +33,7 @@
                 <Setter Property="BorderBrush" Value="{StaticResource GlobalHighlightingColor}"/>
                 <Setter Property="BorderThickness" Value="{StaticResource GlobalBorderThickness}"/>
                 <Setter Property="CornerRadius" Value="{StaticResource GlobalCornerRadius}"/>
+                <Setter Property="Background" Value="{StaticResource BackgroundPanel}"/>
             </Style>
             <Style x:Key="RootGrid" TargetType="Grid">
                 <Setter Property="ColumnSpacing" Value="{StaticResource GlobalSpacing}"/>
@@ -48,7 +48,6 @@
                 <Setter Property="Background" Value="{StaticResource BackgroundPanel}"/>
                 <Setter Property="BorderThickness" Value="{StaticResource GlobalBorderThickness}"/>
                 <Setter Property="BorderBrush" Value="{StaticResource GlobalHighlightingColor}"/>
-                <Setter Property="TabFocusNavigation" Value="Once"/>
             </Style>
 
             <Style x:Key="GlobalContentDialog" TargetType="ContentDialog">

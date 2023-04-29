@@ -55,15 +55,6 @@
             <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBox x:Name="FieldMultiLineText"
-                 Grid.RowSpan="5"
-                 Style="{StaticResource PanelTextBox}"/>
-        <TextBox x:Name="PatternDictonaryChar"
-                 Grid.Column="1"
-                 Grid.Row="4"
-                 Grid.RowSpan="2"
-                 Description="Словарь элементов"
-                 Style="{StaticResource PanelTextBox}"/>
         <Frame Grid.Column="1"
                Grid.Row="0"
                Grid.RowSpan="3"
@@ -73,12 +64,23 @@
                Padding="-8">
             <oxy:PlotView x:Name="HistogramPlot"/>
         </Frame>
+        <TextBox x:Name="FieldMultiLineText"
+                 Grid.RowSpan="5"
+                 Style="{StaticResource PanelTextBox}"
+                 Description="Анализируемый текст"/>
+        <TextBox x:Name="PatternDictonaryChar"
+                 Grid.Column="1"
+                 Grid.Row="4"
+                 Grid.RowSpan="2"
+                 Description="Словарь элементов"
+                 Style="{StaticResource PanelTextBox}"/>
         <Frame Grid.Column="2"
                Grid.Row="4"
                Grid.RowSpan="2"
-               Style="{StaticResource FramePanel}">
-            <ScrollViewer>
-                <StackPanel>
+               Style="{StaticResource FramePanel}"
+               Margin="0, 0, 0, 20">
+            <ScrollViewer Padding="10, 0, 10, 0">
+                <StackPanel Spacing="{StaticResource GlobalSpacing}">
                     <ComboBox x:Name="ComboBoxDictonaryNumbers"
                               Description="Цифры в словаре"
                               SelectedIndex="0"
