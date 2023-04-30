@@ -42,7 +42,7 @@
         </Grid.RowDefinitions>
         <Frame Style="{StaticResource FramePanel}">
             <Image x:Name="CurrentImage"
-                   Source="/Assets/SplashScreen.scale-200.png"/>
+                   Source="/Assets/FileNotLoad.png"/>
         </Frame>
         <Frame Grid.Row="1"
                Style="{StaticResource FramePanel}">
@@ -65,7 +65,22 @@
                         Click="ColorHistogram_Click"
                         Grid.Row="1"
                         Content="Уникальные цвета"
-                        Style="{StaticResource GlobalButton}"/>
+                        Style="{StaticResource GlobalButton}">
+                    <Button.Flyout>
+                        <Flyout x:Name="FlayoutWarningColorHistogram"
+                                FlyoutPresenterStyle="{StaticResource GlobalFlyout}">
+                            <StackPanel Style="{StaticResource GlobalStackPanel}">
+                                <TextBlock Text="При большом количестве уникальных элементов возможны зависания"
+                                           Style="{StaticResource GlobalTextBlock}"/>
+                                <TextBlock x:Name="CountUniqleColorHistogram"
+                                           Style="{StaticResource GlobalTextBlock}"/>
+                                <Button Click="ColorHistogramApplay_Click"
+                                        Content="Продолжить"
+                                        Style="{StaticResource GlobalButton}"/>
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
                 <Button x:Name="AlphaHistogram"
                         Click="AlphaHistogram_Click"
                         Grid.Row="1"
@@ -105,7 +120,8 @@
             </Grid.RowDefinitions>
             <Frame Style="{StaticResource FramePanel}">
                 <ScrollViewer>
-                    <StackPanel x:Name="HistogramContainer">
+                    <StackPanel x:Name="HistogramContainer"
+                                Style="{StaticResource GlobalStackPanel}">
 
                     </StackPanel>
                 </ScrollViewer>

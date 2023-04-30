@@ -194,6 +194,15 @@ namespace FrequencyAnalysisApp
         }
 
         private async void ColorHistogram_Click(object sender, RoutedEventArgs e)
+        {
+            if (await IsNotContainsResilt())
+            {
+                FlayoutWarningColorHistogram.Hide();
+                return;
+            }
+            CountUniqleColorHistogram.Text = $"Текущие кол-во уникальных: {_analysisResult.Color.CountUniqle}";
+        }
+        private async void ColorHistogramApplay_Click(object sender, RoutedEventArgs e)
             => await AddHistogram(_analysisResult.Color, ColorHistogram.Content as string, OxyColors.DarkGreen, HistogramType.Color);
         private async void AlphaHistogram_Click(object sender, RoutedEventArgs e)
             => await AddHistogram(_analysisResult.Alpha, AlphaHistogram.Content as string, OxyColors.Black, HistogramType.Alpha, (v) => v.Value);
