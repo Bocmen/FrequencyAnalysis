@@ -149,6 +149,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\FileNotLoad.png" />
     <Content Include="Assets\LogoImageAnalysis.png" />
     <Content Include="Assets\LogoTextAnalysis.png" />
     <Content Include="Properties\Default.rd.xml" />
