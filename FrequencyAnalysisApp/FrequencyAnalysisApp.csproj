@@ -124,6 +124,9 @@
     <Compile Include="Extension\HistogramViewExtension.cs" />
     <Compile Include="Extension\PlotModelExtensions.cs" />
     <Compile Include="Extension\UIElementExtension.cs" />
+    <Compile Include="FullScreenHistogramView.xaml.cs">
+      <DependentUpon>FullScreenHistogramView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ImageAnalysis.xaml.cs">
       <DependentUpon>ImageAnalysis.xaml</DependentUpon>
     </Compile>
@@ -210,6 +213,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="FullScreenHistogramView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ImageAnalysis.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

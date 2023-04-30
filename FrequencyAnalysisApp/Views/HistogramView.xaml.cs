@@ -11,6 +11,7 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using static FrequencyAnalysisApp.FullScreenHistogramView;
 
 namespace FrequencyAnalysisApp.Views
 {
@@ -35,7 +36,7 @@ namespace FrequencyAnalysisApp.Views
         }
         private async void SaveImage_Click(object sender, RoutedEventArgs e)
         {
-            if(_currentPlotView == null)
+            if (_currentPlotView == null)
             {
                 await PrefabsDialog.ShowErrorNotReult();
                 return;
@@ -45,7 +46,7 @@ namespace FrequencyAnalysisApp.Views
         private void FullOpen_Click(object sender, RoutedEventArgs e)
         {
             if (_currentPlotView != null && Window.Current.Content is Frame frame)
-                frame.Navigate(typeof(FullScreenHistogramView), this);
+                frame.Navigate(typeof(FullScreenHistogramView), new DataInput(this, _currentPlotView.Model));
         }
         private void SetViewModel(PlotModel plotModel)
         {
@@ -55,6 +56,7 @@ namespace FrequencyAnalysisApp.Views
             };
             HistogramPlotContainer.Content = _currentPlotView;
         }
+        internal void Reload() => SetViewModel(_currentPlotView.Model);
 
         public struct NodeHistogram
         {
@@ -69,55 +71,6 @@ namespace FrequencyAnalysisApp.Views
                 Value=value;
             }
         }
-
-        private class FullScreenHistogramView: Page
-        {
-            private HistogramView _histogramView;
-            private PlotView _plotView;
-
-            protected override void OnNavigatedTo(NavigationEventArgs e)
-            {
-                if (e.Parameter is HistogramView histogramView)
-                {
-                    _histogramView = histogramView;
-                    Button btnBack = new Button()
-                    {
-                        VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Top,
-                        Style = (Style)Application.Current.Resources["NavigationBackButtonNormalStyle"]
-                    };
-                    btnBack.Click += Back_Click;
-                    AppBarButton saveImage = new AppBarButton()
-                    {
-                        Icon = new SymbolIcon(Symbol.Camera)
-                    };
-                    saveImage.Click += SaveImage_Click1;
-                    TopAppBar = new CommandBar()
-                    {
-                        Content = btnBack,
-                        PrimaryCommands =
-                        {
-                            saveImage
-                        }
-                    };
-                    _histogramView._currentPlotView.Model.AttachToView(null);
-                    _plotView = new PlotView()
-                    {
-                        Model = _histogramView._currentPlotView.Model
-                    };
-                    Content = _plotView;
-                }
-                else
-                    throw new Exception("Неожиданное поведение");
-            }
-
-            private async void SaveImage_Click1(object sender, RoutedEventArgs e) => await PrefabsDialog.ViewWaitTask(() => FileSave.Save("png", _plotView.SavePngAsync, "HistogramImage"), Consts.TitleFileSave);
-
-            private void Back_Click(object sender, RoutedEventArgs e)
-            {
-                _histogramView._currentPlotView.Model.AttachToView(null);
-                _histogramView.SetViewModel(_histogramView._currentPlotView.Model);
-                Frame.GoBack();
-            }
-        }
     }
+
 }
