@@ -12,7 +12,7 @@ namespace FrequencyAnalysisApp.Extension
         {
             getColor = getColor ?? ((_) => OxyColors.DarkGreen);
             var dataDrav = (order == null ? frequencyAnalysis.GetResults() : frequencyAnalysis.GetResults().OrderByDescending(order)).Select(x => new HistogramView.NodeHistogram(x.Value.ToString(), getColor(x), x.Frequency));
-            histogramView.Draw(dataDrav, $"{title}\nH(A)={Math.Round(frequencyAnalysis.MinInformationMeasure, 2)}");
+            histogramView.Draw(dataDrav, $"{title}\nH(A)={Math.Round(frequencyAnalysis.MinInformationMeasure, 2)}, {nameof(frequencyAnalysis.CountValues)}: {frequencyAnalysis.CountValues}, {nameof(frequencyAnalysis.CountUniqle)}: {frequencyAnalysis.CountUniqle}");
         }
     }
 }
