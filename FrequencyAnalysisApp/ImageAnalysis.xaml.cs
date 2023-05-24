@@ -113,13 +113,13 @@ namespace FrequencyAnalysisApp
         }
         #endregion
         #region Визуализация гистограмм
-        private async Task AddHistogram<T>(FrequencyAnalysis<T> frequencyAnalysis, string title, OxyColor oxyColor, HistogramType histogramType, Func<FrequencyAnalysisNode<T>, double> order = null)
+        private async Task AddHistogram<T>(FrequencyAnalysis<T> frequencyAnalysis, string title, OxyColor oxyColor, HistogramType histogramType, HistogramViewExtension.SortType sortType = HistogramViewExtension.SortType.Ascending)
         {
             if (await IsNotContainsResilt()) return;
             if (currentViewsHistogram.HasFlag(histogramType)) return;
             var view = new Views.HistogramView();
             view.MinHeight = Frame.ActualHeight * 0.6;
-            view.Draw(frequencyAnalysis, title, (v) => v is OxyColor colorParse ? colorParse : oxyColor, order);
+            view.Draw(frequencyAnalysis, title, HistogramViewExtension.SortValue.Value, sortType, null, (v) => v is OxyColor colorParse ? colorParse : oxyColor);
             currentViewsHistogram |= histogramType;
             HistogramContainer.Children.Add(view);
         }
@@ -140,18 +140,18 @@ namespace FrequencyAnalysisApp
         private async void ColorHistogramApplay_Click(object sender, RoutedEventArgs e)
         {
             FlayoutWarningColorHistogram.Hide();
-            await AddHistogram(_analysisResult.Color, ColorHistogram.Content as string, OxyColors.DarkGreen, HistogramType.Color);
+            await AddHistogram(_analysisResult.Color, ColorHistogram.Content as string, OxyColors.DarkGreen, HistogramType.Color, HistogramViewExtension.SortType.Ignore);
         }
         private async void AlphaHistogram_Click(object sender, RoutedEventArgs e)
-            => await AddHistogram(_analysisResult.Alpha, AlphaHistogram.Content as string, OxyColors.Black, HistogramType.Alpha, (v) => v.Value);
+            => await AddHistogram(_analysisResult.Alpha, AlphaHistogram.Content as string, OxyColors.Black, HistogramType.Alpha);
         private async void RedHistogram_Click(object sender, RoutedEventArgs e)
-            => await AddHistogram(_analysisResult.Red, RedHistogram.Content as string, OxyColors.Red, HistogramType.Red, (v) => v.Value);
+            => await AddHistogram(_analysisResult.Red, RedHistogram.Content as string, OxyColors.Red, HistogramType.Red);
         private async void GreenHistogram_Click(object sender, RoutedEventArgs e)
-            => await AddHistogram(_analysisResult.Green, GreenHistogram.Content as string, OxyColors.Green, HistogramType.Green, (v) => v.Value);
+            => await AddHistogram(_analysisResult.Green, GreenHistogram.Content as string, OxyColors.Green, HistogramType.Green);
         private async void BlueHistogram_Click(object sender, RoutedEventArgs e)
-            => await AddHistogram(_analysisResult.Blue, BlueHistogram.Content as string, OxyColors.Blue, HistogramType.Blue, (v) => v.Value);
+            => await AddHistogram(_analysisResult.Blue, BlueHistogram.Content as string, OxyColors.Blue, HistogramType.Blue);
         private async void TransparencyHistogram_Click(object sender, RoutedEventArgs e)
-            => await AddHistogram(_analysisResult.Transparency, TransparencyHistogram.Content as string, OxyColors.Black, HistogramType.Transparency, (v) => v.Value);
+            => await AddHistogram(_analysisResult.Transparency, TransparencyHistogram.Content as string, OxyColors.Black, HistogramType.Transparency);
         private void ClearHistogramContainer_Click(object sender, RoutedEventArgs e) => ClearHistogramContainer();
         #endregion
         #region HelpTypes

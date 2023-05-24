@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using static FrequencyAnalysisApp.Extension.HistogramViewExtension;
 
 namespace FrequencyAnalysisApp
 {
@@ -191,7 +192,31 @@ namespace FrequencyAnalysisApp
         private async void DrawPlotsButton_Click(object sender, RoutedEventArgs e)
         {
             _analysisResult = await CreateAnalysis();
-            HistogramPlot.Draw(_analysisResult, "Гистограмма текста", (_) => OxyColors.DarkGreen, (v) => v.Count);
+            IEnumerable<char> additionalElements = null;
+            if (TypeDrawDictonary.SelectedIndex == 1)
+                additionalElements = PatternDictonaryChar.Text;
+            SortType sortType = SortType.Ignore;
+            SortValue sortValue = SortValue.Default;
+            switch (SortPlotType.SelectedIndex)
+            {
+                case 0:
+                    sortType = SortType.Descending;
+                    sortValue = SortValue.Frequency;
+                    break;
+                case 1:
+                    sortType = SortType.Ascending;
+                    sortValue = SortValue.Frequency;
+                    break;
+                case 2:
+                    sortType = SortType.Descending;
+                    sortValue = SortValue.Value;
+                    break;
+                case 3:
+                    sortType = SortType.Ascending;
+                    sortValue = SortValue.Value;
+                    break;
+            }
+            HistogramPlot.Draw(_analysisResult, "Гистограмма текста", sortValue, sortType, additionalElements, (_) => OxyColors.DarkGreen);
         }
         #endregion
         #region Работа со словарём элементов

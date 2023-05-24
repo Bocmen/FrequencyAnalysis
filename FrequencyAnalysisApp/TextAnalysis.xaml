@@ -66,9 +66,17 @@
         <TextBox x:Name="PatternDictonaryChar"
                  Grid.Column="1"
                  Grid.Row="4"
-                 Grid.RowSpan="2"
                  Description="Словарь элементов"
                  Style="{StaticResource PanelTextBox}"/>
+        <ComboBox x:Name="TypeDrawDictonary"
+                  Grid.Row="5"
+                  Grid.Column="1"
+                  SelectedIndex="0"
+                  Style="{StaticResource GlobalComboBox}"
+                  Description="Тип отображения словаря">
+            <ComboBoxItem Content="Отображать только те которые имеют ненулевую частоту"/>
+            <ComboBoxItem Content="Отображать все элементы словаря"/>
+        </ComboBox>
         <Frame Grid.Column="2"
                Grid.Row="4"
                Grid.RowSpan="2"
@@ -119,9 +127,18 @@
                 Click="DrawPlotsButton_Click"
                 Grid.Row="3"
                 Grid.Column="1"
-                Grid.ColumnSpan="2"
                 Content="Построить график"
                 Style="{StaticResource GlobalButton}"/>
+        <ComboBox x:Name="SortPlotType"
+                  Grid.Row="3"
+                  Grid.Column="2"
+                  SelectedIndex="0"
+                  Style="{StaticResource GlobalComboBox}">
+            <ComboBoxItem Content="По убыванию частоты"/>
+            <ComboBoxItem Content="По возрастанию частоты"/>
+            <ComboBoxItem Content="По убыванию кода символа"/>
+            <ComboBoxItem Content="По возрастанию кода символа"/>
+        </ComboBox>
         <ComboBox x:Name="ComboBoxCaseFilter"
                   Grid.Column="0"
                   Grid.Row="5"
