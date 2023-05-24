@@ -10,11 +10,11 @@ namespace FrequencyAnalysisApp.Model
         public int CountValues { get; private set; }
         public int CountUniqle { get; private set; }
 
-        public double MinInformationMeasure => _frequencyAnalysis.Select(x =>
+        public double MinInformationMeasure => Math.Abs(_frequencyAnalysis.Select(x =>
         {
             double frequency = (double)x.Value / CountValues;
-            return x.Value * frequency * Math.Log((double)CountValues / x.Value, 2); 
-        }).Sum();
+            return frequency * Math.Log(frequency, 2); 
+        }).Sum());
 
         private readonly Dictionary<T, int> _frequencyAnalysis = new Dictionary<T, int>();
 
