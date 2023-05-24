@@ -194,7 +194,7 @@ namespace FrequencyAnalysisApp
             _analysisResult = await CreateAnalysis();
             IEnumerable<char> additionalElements = null;
             if (TypeDrawDictonary.SelectedIndex == 1)
-                additionalElements = PatternDictonaryChar.Text;
+                additionalElements = CaseEditor(PatternDictonaryChar.Text).Distinct();
             SortType sortType = SortType.Ignore;
             SortValue sortValue = SortValue.Default;
             switch (SortPlotType.SelectedIndex)
